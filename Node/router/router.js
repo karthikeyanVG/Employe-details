@@ -5,7 +5,7 @@ const UserController = require('../controllers/user.controller')
 
 users.post("/register", UserController.register)
 
-users.get("/get", UserController.get_user)
+users.get("/get/:id", UserController.get_user)
 
 users.get("/getall", UserController.get_all)
 

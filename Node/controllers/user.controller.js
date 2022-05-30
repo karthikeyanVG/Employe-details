@@ -38,10 +38,8 @@ exports.register = (req, res) => {
 };
 
 exports.get_user = (req, res) => {
-    var body = req.body
-    User.find({
-        email: body.email
-    })
+    var { id } = req.params
+    User.findById({ _id: id })
         .then(user => {
             if (user) {
                 ReS(res, user)
@@ -65,17 +63,6 @@ exports.get_all = (req, res) => {
         })
 }
 
-exports.deleteOne = (req, res) => {
-
-    var body = req.params
-
-    User.remove({ _id: body.id })
-        .then((data) => {
-            res.send(data)
-        }).catch((error) => {
-            console.log(error)
-        })
-}
 
 exports.update = (req, res) => {
     var body = req.body
@@ -93,3 +80,20 @@ exports.update = (req, res) => {
             });
         });
 }
+
+exports.deleteOne = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+
+        const deletuser = await User.findByIdAndDelete({ _id: id })
+        console.log(deletuser);
+        res.status(201).json(deletuser);
+
+    } catch (error) {
+        res.status(422).json(error);
+    }
+}
+
+
+
